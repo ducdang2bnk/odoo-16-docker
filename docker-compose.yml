@@ -8,12 +8,14 @@ services:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo16@2022
       - POSTGRES_DB=postgres
+      - command=-p 5433
+      - ports="5433:5432"
     restart: always             # run as a service
 #    restart: unless-stopped
 #    networks:
 #      - default
-    ports:
-        - "0.0.0.0:5434:5432"
+#    ports:
+#        - "0.0.0.0:5434:5432"
     volumes:
         - ./postgresql:/var/lib/postgresql/data
 
