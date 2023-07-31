@@ -1,0 +1,42 @@
+version: '2'
+services:
+  db:
+    image: postgres:15
+    user: root
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo16@2022
+      - POSTGRES_DB=postgres
+    restart: always             # run as a service
+#    networks:
+#      - default
+    ports:
+        - "0.0.0.0:5434:5432"
+    volumes:
+        - ./postgresql:/var/lib/postgresql/data
+
+  odoo16:
+    image: odoo:16
+    user: root
+    depends_on:
+      - db
+    ports:
+      - "0.0.0.0:8016:8069"
+#      - "20016:8072" # live chat
+    tty: true
+    command: --
+    environment:
+      - DB_HOST=db
+      - USER=odoo
+      - PASSWORD=odoo16@2022
+
+    volumes:
+      #- /etc/timezone:/etc/timezone:ro
+      #- /etc/localtime:/etc/localtime:ro
+#      - ./entrypoint.sh:/entrypoint.sh   # if you want to install additional Python packages, uncomment this line!
+      - ./addons:/mnt/extra-addons
+      - ./odoo-enterprise-16:/mnt/odoo-enterprise-16-addons
+      - ./project_name:/mnt/project_name-addons
+      - ./etc:/etc/odoo
+    restart: always             # run as a service
+    
