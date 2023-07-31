@@ -2,14 +2,14 @@ version: '3.5'
 services:
   db:
     image: postgres:15
-    hostname: postgres
+#    hostname: postgres
     user: root
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo16@2022
       - POSTGRES_DB=postgres
-#    restart: always             # run as a service
-    restart: unless-stopped
+    restart: always             # run as a service
+#    restart: unless-stopped
 #    networks:
 #      - default
     ports:
@@ -28,7 +28,7 @@ services:
     tty: true
     command: --
     environment:
-      - DB_HOST=db
+      - DB_HOST=localhost
       - USER=odoo
       - PASSWORD=odoo16@2022
 
